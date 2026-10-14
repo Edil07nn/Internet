@@ -6,6 +6,9 @@ public class InternetSpeedApp {
         Scanner scanner = new Scanner(System.in);
         InternetSpeedLog log = new InternetSpeedLog();
 
+        // Бұрын сақталған жазбаларды жүктеу
+        log.loadFromFile();
+
         boolean running = true;
 
         while (running) {
@@ -37,28 +40,53 @@ public class InternetSpeedApp {
                     speed.setPlace(scanner.nextLine().trim());
 
                     System.out.print("Жүктеу жылдамдығы (Мбит/с): ");
+                    int mbps;
+
                     try {
-                        speed.setMbps(Integer.parseInt(
-                                scanner.nextLine().trim()));
+                        mbps = Integer.parseInt(
+                                scanner.nextLine().trim());
                     } catch (NumberFormatException e) {
-                        System.out.println("Жылдамдық бүтін сан болуы керек!");
+                        System.out.println(
+                                "Жылдамдық бүтін сан болуы керек!");
+                        break;
+                    }
+
+                    if (mbps < 0 || mbps > 2000) {
+                        System.out.println(
+                                "Жылдамдық 0-2000 аралығында болуы керек!");
                         break;
                     }
 
                     System.out.print("Ping (мс): ");
+                    int ping;
+
                     try {
-                        speed.setPing(Integer.parseInt(
-                                scanner.nextLine().trim()));
+                        ping = Integer.parseInt(
+                                scanner.nextLine().trim());
                     } catch (NumberFormatException e) {
-                        System.out.println("Ping бүтін сан болуы керек!");
+                        System.out.println(
+                                "Ping бүтін сан болуы керек!");
                         break;
                     }
 
-                    if (speed.getDate() != null
-                            && speed.getPlace() != null) {
-                        log.addRecord(speed);
-                    } else {
-                        System.out.println("Жазба қосылмады. Деректерді тексеріңіз.");
+                    if (ping < 1 || ping > 2000) {
+                        System.out.println(
+                                "Ping 1-2000 аралығында болуы керек!");
+                        break;
+                    }
+
+                    speed.setMbps(mbps);
+                    speed.setPing(ping);
+
+                    if (speed.getDate() == null
+                            || speed.getPlace() == null) {
+                        System.out.println(
+                                "Жазба қосылмады. Деректерді тексеріңіз.");
+                        break;
+                    }
+
+                    if (log.addRecord(speed)) {
+                        log.saveToFile();
                     }
                     break;
 
@@ -68,6 +96,7 @@ public class InternetSpeedApp {
 
                 case "4":
                     InternetSpeed max = log.findMax();
+
                     if (max == null) {
                         System.out.println("Әзірге жазбалар жоқ.");
                     } else {
@@ -77,13 +106,15 @@ public class InternetSpeedApp {
                     break;
 
                 case "5":
-                    System.out.print("Орынды енгізіңіз (Үй, Университет, Кафе): ");
+                    System.out.print(
+                            "Орынды енгізіңіз (Үй, Университет, Кафе): ");
                     String place = scanner.nextLine().trim();
                     log.printByCategory(place);
                     break;
 
                 case "6":
                     InternetSpeed min = log.findMin();
+
                     if (min == null) {
                         System.out.println("Әзірге жазбалар жоқ.");
                     } else {
@@ -93,8 +124,9 @@ public class InternetSpeedApp {
                     break;
 
                 case "7":
-                    System.out.println("Баяу интернет жазбаларының саны: "
-                            + log.countSlow());
+                    System.out.println(
+                            "Баяу интернет жазбаларының саны: "
+                                    + log.countSlow());
                     break;
 
                 case "0":
@@ -103,7 +135,8 @@ public class InternetSpeedApp {
                     break;
 
                 default:
-                    System.out.println("Қате таңдау! Қайта енгізіңіз.");
+                    System.out.println(
+                            "Қате таңдау! Қайта енгізіңіз.");
             }
         }
 

@@ -54,7 +54,7 @@ public class InternetSpeed {
     }
 
     public boolean isSlow() {
-        return mbps < 10 || ping > 100;
+        return mbps < 10 || ping > 50;
     }
 
     public void printInfo() {
