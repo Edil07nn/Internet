@@ -4,6 +4,7 @@ public class InternetSpeed {
     private String place;
     private int mbps;
     private int ping;
+    private int uploadMbps;
 
     public String getDate() {
         return date;
@@ -64,5 +65,19 @@ public class InternetSpeed {
         System.out.println("Ping: " + ping + " мс");
         System.out.println("Интернет күйі: "
                 + (isSlow() ? "Баяу" : "Қалыпты"));
+
+    }
+    public int getUploadMbps() {
+        return uploadMbps;
+    }
+
+    public void setUploadMbps(int uploadMbps) {
+        if (uploadMbps >= 0 && uploadMbps <= 2000) {
+            this.uploadMbps = uploadMbps;
+        } else {
+            throw new IllegalArgumentException(
+                    "Жүктеу жылдамдығы 0 мен 2000 аралығында болуы керек!"
+            );
+        }
     }
 }

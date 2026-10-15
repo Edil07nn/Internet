@@ -6,6 +6,7 @@ public class InternetSpeedTestDrive {
         speed.setDate("15.10");
         speed.setPlace("Универ 422");
         speed.setMbps(11);
+        speed.setUploadMbps(5);
         speed.setPing(591);
 
         System.out.println("=== Интернет өлшемін тексеру ===");
