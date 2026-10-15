@@ -22,6 +22,10 @@ public class InternetSpeed {
         return ping;
     }
 
+    public int getUploadMbps() {
+        return uploadMbps;
+    }
+
     public void setDate(String date) {
         if (date != null && date.matches("\\d{2}\\.\\d{2}")) {
             this.date = date;
@@ -42,7 +46,9 @@ public class InternetSpeed {
         if (mbps >= 0 && mbps <= 2000) {
             this.mbps = mbps;
         } else {
-            System.out.println("Жылдамдық 0-2000 аралығында болуы керек!");
+            System.out.println(
+                    "Жылдамдық 0-2000 аралығында болуы керек!"
+            );
         }
     }
 
@@ -50,7 +56,19 @@ public class InternetSpeed {
         if (ping >= 1 && ping <= 2000) {
             this.ping = ping;
         } else {
-            System.out.println("Ping 1-2000 аралығында болуы керек!");
+            System.out.println(
+                    "Ping 1-2000 аралығында болуы керек!"
+            );
+        }
+    }
+
+    public void setUploadMbps(int uploadMbps) {
+        if (uploadMbps >= 0 && uploadMbps <= 2000) {
+            this.uploadMbps = uploadMbps;
+        } else {
+            System.out.println(
+                    "Жіберу жылдамдығы 0-2000 аралығында болуы керек!"
+            );
         }
     }
 
@@ -58,26 +76,31 @@ public class InternetSpeed {
         return mbps < 10 || ping > 50;
     }
 
+    public String getQuality() {
+        if (mbps >= 100) {
+            return "Өте жақсы";
+        } else if (mbps >= 50) {
+            return "Жақсы";
+        } else if (mbps >= 10) {
+            return "Орташа";
+        } else {
+            return "Нашар";
+        }
+    }
+
     public void printInfo() {
         System.out.println("Күні: " + date);
         System.out.println("Орын: " + place);
-        System.out.println("Жүктеу жылдамдығы: " + mbps + " Мбит/с");
+        System.out.println(
+                "Жүктеу жылдамдығы: " + mbps + " Мбит/с"
+        );
+        System.out.println(
+                "Жіберу жылдамдығы: " + uploadMbps + " Мбит/с"
+        );
         System.out.println("Ping: " + ping + " мс");
-        System.out.println("Интернет күйі: "
-                + (isSlow() ? "Баяу" : "Қалыпты"));
-
-    }
-    public int getUploadMbps() {
-        return uploadMbps;
-    }
-
-    public void setUploadMbps(int uploadMbps) {
-        if (uploadMbps >= 0 && uploadMbps <= 2000) {
-            this.uploadMbps = uploadMbps;
-        } else {
-            throw new IllegalArgumentException(
-                    "Жүктеу жылдамдығы 0 мен 2000 аралығында болуы керек!"
-            );
-        }
+        System.out.println(
+                "Интернет күйі: " + (isSlow() ? "Баяу" : "Қалыпты")
+        );
+        System.out.println("Интернет сапасы: " + getQuality());
     }
 }
