@@ -250,7 +250,7 @@ public class InternetSpeedLog {
             return;
         }
 
-        System.out.println("\n=== Жүктеу жылдамдығының графигі ===");
+        System.out.println("\n Жүктеу жылдамдығының графигі ");
 
         int i = 0;
         while (i < count) {
