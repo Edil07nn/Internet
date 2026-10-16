@@ -55,6 +55,36 @@ public class InternetSpeedLog {
         }
     }
 
+    public double getAverageUploadMbps() {
+        if (count == 0) {
+            return 0;
+        }
+
+        double total = 0;
+
+        for (int i = 0; i < count; i++) {
+            total += items[i].getUploadMbps();
+        }
+
+        return total / count;
+    }
+
+    public double getAveragePing() {
+        if (count == 0) {
+            return 0;
+        }
+
+        double total = 0;
+
+        for (int i = 0; i < count; i++) {
+            total += items[i].getPing();
+        }
+
+        return total / count;
+    }
+
+
+
     public void printByCategory(String place) {
         boolean found = false;
         int i = 0;
@@ -173,6 +203,7 @@ public class InternetSpeedLog {
         return total;
     }
 
+
     public void printStatistics() {
         if (count == 0) {
             System.out.println("Статистика үшін жазбалар жоқ.");
@@ -180,10 +211,24 @@ public class InternetSpeedLog {
         }
 
         System.out.println("Жазбалар саны: " + count);
+
         System.out.println("Жүктеу жылдамдығының қосындысы: "
                 + getTotalMbps() + " Мбит/с");
-        System.out.printf("Орташа жүктеу жылдамдығы: %.2f Мбит/с%n",
-                getAverageMbps());
+
+        System.out.printf(
+                "Орташа жүктеу жылдамдығы: %.2f Мбит/с%n",
+                getAverageMbps()
+        );
+
+        System.out.printf(
+                "Орташа жіберу жылдамдығы: %.2f Мбит/с%n",
+                getAverageUploadMbps()
+        );
+
+        System.out.printf(
+                "Орташа Ping: %.2f мс%n",
+                getAveragePing()
+        );
 
         InternetSpeed max = findMax();
         InternetSpeed min = findMin();
@@ -196,6 +241,8 @@ public class InternetSpeedLog {
 
         System.out.println("\nБаяу интернет жағдайлары: " + countSlow());
     }
+
+
 
     public void printChart() {
         if (count == 0) {
